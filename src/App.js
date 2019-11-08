@@ -14,26 +14,30 @@ class App extends Component {
 		this.getEateries();
 	} //end DidMount
 
+	getEateries = () => {
+		axios
+      .get('https://data.cityofnewyork.us/resource/43nn-pn8j.json?$query=SELECT distinct dba')
+			.then(data => this.setState({ eateries: data.data }))
+			.catch(err => {
+				console.log(err);
+				return null;
+			});
+	}; //end getEateries
+
 	render() {
 		return (
-			<div className='App'>
-				<header className='App-header'>
-					<img src={logo} className='App-logo' alt='logo' />
-					<p>
-						Edit <code>src/App.js</code> and save to reload.
-					</p>
-					<a
-						className='App-link'
-						href='https://reactjs.org'
-						target='_blank'
-						rel='noopener noreferrer'
-					>
-						Learn React
-					</a>
-				</header>
+			<div>
+				{this.state.eateries.length === 0 ? (
+					<div>Loading...</div>
+				) : (
+					this.state.eateries.map((eatery, index) => {
+						return <div key={index}>{eatery.dba}</div>;
+					})
+				)}
 			</div>
 		);
 	} //end render
 } //end function
 
 export default App;
+//<img src={logo} className='App-logo' alt='logo' />
