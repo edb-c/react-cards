@@ -16,7 +16,9 @@ class App extends Component {
 
 	getEateries = () => {
 		axios
-      .get('https://data.cityofnewyork.us/resource/43nn-pn8j.json?$query=SELECT distinct dba')
+			.get(
+				'https://data.cityofnewyork.us/resource/43nn-pn8j.json?$query=SELECT distinct dba, boro, grade, inspection_date'
+			)
 			.then(data => this.setState({ eateries: data.data }))
 			.catch(err => {
 				console.log(err);
@@ -31,7 +33,12 @@ class App extends Component {
 					<div>Loading...</div>
 				) : (
 					this.state.eateries.map((eatery, index) => {
-						return <div key={index}>{eatery.dba}</div>;
+						return (
+							<div key={index}>
+								{eatery.dba}, {eatery.boro}, {eatery.grade} ,
+								{eatery.inspection_date}{' '}
+							</div>
+						);
 					})
 				)}
 			</div>
