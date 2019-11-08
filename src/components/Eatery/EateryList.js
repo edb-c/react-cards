@@ -42,8 +42,13 @@ render() {
 
 
 getEateries = async () => {
+    try {
     await axios.get('https://data.cityofnewyork.us/resource/43nn-pn8j.json?$query=SELECT distinct dba, boro, grade, inspection_date')
-    .then(data => this.setState({ eateries: data.data }))  
+    .then(data => this.setState({ eateries: data.data })) 
+    }
+    catch(error) {
+        throw new Error(error.message);
+      }
     }; //end getEateries
 
 render() {
