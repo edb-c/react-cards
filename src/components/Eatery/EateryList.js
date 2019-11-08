@@ -1,71 +1,63 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-
-class EateryList extends Component { 
-    constructor() {
-        super();
-        this.state = {
-            eateries: []
-        };
-    } //end constructor
-
-    componentDidMount() {
-        this.getEateries();
-    } //end DidMount
 /*
-getEateries = () => {
-    axios
-  .get('https://data.cityofnewyork.us/resource/43nn-pn8j.json?$query=SELECT distinct dba, boro, grade, inspection_date')
-        .then(data => this.setState({ eateries: data.data }))
-        .catch(err => {
-            console.log(err);
-            return null;
-        });
-}; //end getEateries
+import React from 'react';
+import EateryCard from './EateryCard.js';
 
-render() {
+const EateryList = ({ eateries }) => {
+
     return (
-        <div>
-            {this.state.eateries.length === 0 ? (
-                <div>Loading...</div>
-            ) : (
-                this.state.eateries.map((eatery, index) => {
-        return <div 
-        key={index}>{eatery.dba}, {eatery.boro},  {eatery.grade} ,{eatery.inspection_date}               </div>;
-                })
-            )}
+        <div className="card-group">
+            {
+                eateries.length === 0 ? (
+                    <div>Loading...</div>
+                    ) : (
+                eateries.map((eatery,index) => (
+                   
+                    <EateryCard 
+                        key={index}
+                        dba={eateries[index].dba}
+                        boro={eateries[index].boro}
+                    />
+        
+                
+            
+                    )
+                )
+                                    )                
+            }
         </div>
-    );
-} //end render
+    )
+                    
+                         
 } //end function
+
+export default EateryList;
 */
+import React from 'react';
+import PropTypes from 'prop-types';
+import EateryCard from './EateryCard.js';
 
-
-getEateries = async () => {
-    try {
-    await axios.get('https://data.cityofnewyork.us/resource/43nn-pn8j.json?$query=SELECT distinct dba, boro, grade, inspection_date')
-    .then(data => this.setState({ eateries: data.data })) 
-    }
-    catch(error) {
-        throw new Error(error.message);
-      }
-    }; //end getEateries
-
-render() {
+const getEateries = (eateries) => {
     return (
-        <div>
-            {this.state.eateries.length === 0 ? (
-                <div>Loading...</div>
-            ) : (
-                this.state.eateries.map((eatery, index) => {
-        return <div 
-        key={index}>{eatery.dba}, {eatery.boro},  {eatery.grade} ,{eatery.inspection_date}               </div>;
-                })
-            )}
-
+        <div className="card-deck">
+            {
+                eateries.map((eatery,index) => <EateryCard key={index} eatery={eatery} />)
+            }
         </div>
     );
-} //end render
-}; //end function
+};
+
+const EateryList = (props) => (
+    <div>
+        {getEateries(props.eateries)}
+    </div>
+);
+
+EateryList.defaultProps = {
+    eateries: []
+};
+
+EateryList.propTypes = {
+    eateries: PropTypes.array
+};
 
 export default EateryList;
