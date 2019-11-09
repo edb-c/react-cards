@@ -29,7 +29,7 @@ export default EateryList;
 import React from 'react';
 import PropTypes from 'prop-types';
 import EateryCard from './EateryCard.js';
-import Pagination from './Pagination';
+//import Pagination from '../Pagination';
 
 const getEateries = eateries => {
 	return (
